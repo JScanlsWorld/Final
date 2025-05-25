@@ -1,0 +1,23 @@
+section .text
+    global _start
+
+count:
+    push ebp
+    mov ebp, esp
+
+    mov ecx, [ebp + 8]
+
+    label:
+    loop label
+
+    leave
+    ret
+
+_start:
+    push DWORD[countNum]
+    call count
+    mov eax, 1
+    int 0x80
+
+section .data
+    countNum dd 1000000

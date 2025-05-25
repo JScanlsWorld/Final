@@ -1,0 +1,36 @@
+counter:
+	push ebp
+	mov ebp, esp
+    
+    mov eax, DWORD[ebp + 8]
+    dec eax
+    cmp eax, 0
+    jg recurse
+
+    mov esp, ebp
+    pop ebp 
+    ret
+
+recurse:
+    push eax
+    call counter
+    
+    add esp, 4
+    mov esp, ebp
+    pop ebp
+    ret
+
+section .text
+	
+	global _start
+
+_start:
+	push DWORD[counterNum]
+	call counter
+    add esp, 4
+
+	mov eax, 1
+	int 0x80
+
+section .data
+	counterNum	dd	1000000
